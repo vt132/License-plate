@@ -161,3 +161,6 @@ cython_debug/
 
 # Torch model
 *.pt
+
+# YOLOv5 repo
+yolov5/
