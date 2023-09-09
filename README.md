@@ -21,4 +21,4 @@ Models:
 - [Plate detection](https://drive.google.com/file/d/1wnbyyVZzZJoMwhBYFdYQ578648mKMJFX/view?usp=sharing)
 - [Character detection](https://drive.google.com/file/d/1WeOq1l41-3cV7tgDNVPxl03k_52atGPb/view?usp=sharing)
 
-Demo: [Link](https://youtu.be/6fOaT9hZfzU)
+Demo: [Link](https://youtu.be/0H4fDBCdg2g)
