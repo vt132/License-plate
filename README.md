@@ -14,6 +14,7 @@ This app provide 2 (+1 authentication) APIs and admin UIs to recognize and manag
 - Run `pip install -r requirements.txt` to install required packages
 - Run `python manage.py migrate` to create local database
 - Run `python manage.py createsuperuser` to create admin user for Admin page access (/app/admin/local)
+- Download 2 pretrained models (link at the resources section)
 - Run `uvicorn main:app` to boot up the backend service
 - Run `streamlit ui.py` to run demo UI
   
