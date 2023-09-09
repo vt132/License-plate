@@ -10,6 +10,7 @@ This app provide 2 (+1 authentication) APIs and admin UIs to recognize and manag
 
 ## How to run
 - Install python (3.9+ recommended)
+- Run `git clone https://github.com/vt132/yolov5.git` to clone yolov5 repo for running models. Also download pretrained models for APIs to works.
 - Run `pip install -r requirements.txt` to install required packages
 - Run `python manage.py migrate` to create local database
 - Run `python manage.py createsuperuser` to create admin user for Admin page access (/app/admin/local)
