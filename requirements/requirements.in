@@ -1,0 +1,13 @@
+fastapi
+fastapi-utils
+
+opencv-python
+
+pytesseract
+
+uvicorn
+
+django
+
+passlib
+python-jose
