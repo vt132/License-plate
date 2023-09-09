@@ -130,9 +130,10 @@ else:
         image_file = st.file_uploader("Upload an image of a license plate")
 
         if st.button("Read License Plate"):
-            result = read_license_plate(
+            results = read_license_plate(
                 st.session_state["token"], image_file.getvalue())
-            if result["wanted"]:
-                st.error(f"Wanted license plate detected {result['number']}")
-            else:
-                st.success(f"Read license plate {result['number']}")
+            for result in results:
+                if result["wanted"]:
+                    st.error(f"Wanted license plate detected {result['number']}")
+                else:
+                    st.success(f"Read license plate {result['number']}")
