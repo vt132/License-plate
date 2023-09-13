@@ -9,7 +9,7 @@ This app provide 2 (+1 authentication) APIs and admin UIs to recognize and manag
 - This app is also come with a simple Django UI to manage Users and License Plate with create, update, delete actions built-in.
 
 ## How to run
-- Install python (3.9+ recommended)
+- Install python (3.9+ recommended) and [pytorch](https://pytorch.org/get-started/locally/) (recommended to install the right version for your system)
 - Run `git clone https://github.com/vt132/yolov5.git` to clone yolov5 repo for running models. Also download pretrained models for APIs to works.
 - Run `pip install -r requirements.txt` to install required packages
 - Run `python manage.py migrate` to create local database
