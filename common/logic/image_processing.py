@@ -67,3 +67,5 @@ def detect_license_plate(img):
                 if flag == 1:
                     break
     return list_read_plates
+
+

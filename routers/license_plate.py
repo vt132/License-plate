@@ -3,8 +3,10 @@ import cv2
 import numpy as np
 from asgiref.sync import sync_to_async
 from fastapi import Depends, HTTPException, UploadFile
+from fastapi.responses import StreamingResponse
 from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
+import io
 
 from apps.licenseplates.models import Plate
 from common.logic.image_processing import detect_license_plate
@@ -51,3 +53,29 @@ class LicensePlateView:
                 status_code=404, detail='License plate not found')
 
         return license_plate
+
+    @router.post(
+        '/enhance-license-plate',
+        dependencies=[Depends(reusable_oauth2)],
+    )
+    async def enhance_license_plate(
+        self,
+        file: UploadFile,
+    ):
+        """Enhance license plate with image."""
+        contents = await file.read()
+
+        # Convert to numpy array
+        nparr = np.frombuffer(contents, np.uint8)  # Use `np.frombuffer` instead of `np.fromstring`
+
+        # Decode the image
+        img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+        # Encode the image back to JPEG format
+        _, encoded_img = cv2.imencode('.jpg', img)
+
+        # Convert to bytes
+        img_bytes = io.BytesIO(encoded_img.tobytes())
+
+        # Return as StreamingResponse
+        return StreamingResponse(img_bytes, media_type="image/jpeg")

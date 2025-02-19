@@ -1,6 +1,8 @@
 import streamlit as st
 import requests
 import datetime
+from io import BytesIO
+from PIL import Image
 BASE_URL = "http://localhost:8000/api/v1"
 
 
@@ -35,6 +37,17 @@ def read_license_plate(token: str, image_file):
     )
     response.raise_for_status()
     return response.json()
+
+
+def enhance_license_plate(token: str, image_file):
+    """Enhance a license plate from an uploaded image."""
+    response = requests.post(
+        f"{BASE_URL}/license-plate/enhance-license-plate",
+        headers={"Authorization": f"Bearer {token}"},
+        files={"file": image_file},
+    )
+    response.raise_for_status()
+    return response
 
 
 st.title("License Plate Manager")
@@ -103,8 +116,8 @@ if (st.session_state.get(
                     st.success(f"Read license plate {result['number']}")
 
 else:
-    create_plate_tab, read_plate_tab = st.tabs(
-        ["Create License Plate", "Read License Plate"])
+    create_plate_tab, read_plate_tab, real_esrgan_tab = st.tabs(
+        ["Create License Plate", "Read License Plate", "Real-ESRGAN"])
 
     with create_plate_tab:
         st.header("Create License Plate")
@@ -137,3 +150,16 @@ else:
                     st.error(f"Wanted license plate detected {result['number']}")
                 else:
                     st.success(f"Read license plate {result['number']}")
+
+    with real_esrgan_tab:
+        st.header("Real ESRGAN")
+        image_file = st.file_uploader("Upload an image of license plate")
+        
+        if st.button("Enhance License Plate"):
+            response = enhance_license_plate(
+                st.session_state["token"], image_file.getvalue())
+            if response.status_code == 200:
+                enhanced_image = Image.open(BytesIO(response.content))
+                st.image(enhanced_image, caption="Enhanced License Plate", use_column_width=True)
+            else:
+                st.error(f"Failed to enhance image: {response.status_code}")
