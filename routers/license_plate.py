@@ -9,7 +9,7 @@ from fastapi_utils.inferring_router import InferringRouter
 import io
 
 from apps.licenseplates.models import Plate
-from common.logic.image_processing import detect_license_plate
+from common.logic.image_processing import detect_license_plate, detect_license_plate_enhanced
 from common.security import reusable_oauth2
 from schemas.license_plate import LicensePlateBase, LicensePlateCreate
 
@@ -71,8 +71,11 @@ class LicensePlateView:
         # Decode the image
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
+        new_img = detect_license_plate_enhanced(img)
+
+
         # Encode the image back to JPEG format
-        _, encoded_img = cv2.imencode('.jpg', img)
+        _, encoded_img = cv2.imencode('.jpg', new_img)
 
         # Convert to bytes
         img_bytes = io.BytesIO(encoded_img.tobytes())
